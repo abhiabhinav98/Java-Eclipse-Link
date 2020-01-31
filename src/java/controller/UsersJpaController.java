@@ -12,7 +12,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import model.Users;
 
@@ -149,6 +151,66 @@ public class UsersJpaController implements Serializable {
             e.printStackTrace();
         }
         return user;
+    }
+    
+    public Users login2(String uname, String pwd){
+        EntityManager em = getEntityManager();
+        Users user = new Users();
+        try{
+            user = (Users)em.createQuery("SELECT u FROM Users u WHERE u.username = :username AND u.password = :password")
+                    .setParameter("username", uname)
+                    .setParameter("password", pwd)
+                    .getSingleResult();
+            
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return user;
+    }
+    
+    public List<Users> findUsersByState(int StateId){
+        EntityManager em = getEntityManager();
+        try{
+            //Compulsory steps
+            CriteriaBuilder cbuilder = em.getCriteriaBuilder();
+            CriteriaQuery cquery = cbuilder.createQuery();
+            Root<Users> user = cquery.from(Users.class);
+            
+            Predicate condition = cbuilder.equal(user.get("state").get("id"), StateId);
+            
+            cquery.select(user)
+                    .where(condition);
+            
+            Query q = em.createQuery(cquery);
+            
+            return q.getResultList();
+        }
+        finally{
+            em.close();
+        }
+    }
+    
+    public List<Users> findUsersByFname(String fname){
+        EntityManager em = getEntityManager();
+        try{
+            //Compulsory steps
+            CriteriaBuilder cbuilder = em.getCriteriaBuilder();
+            CriteriaQuery cquery = cbuilder.createQuery();
+            Root<Users> user = cquery.from(Users.class);
+            
+            Predicate condition = cbuilder.like(user.get("fname"), fname);
+            
+            cquery.select(user)
+                    .where(condition);
+            
+            Query q = em.createQuery(cquery);
+            
+            return q.getResultList();
+        }
+        finally{
+            em.close();
+        }
     }
     
 }

@@ -3,6 +3,7 @@
   <persistence-unit name="JPA_demo1PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>model.Users</class>
+    <class>model.States</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db1?zeroDateTimeBehavior=convertToNull"/>

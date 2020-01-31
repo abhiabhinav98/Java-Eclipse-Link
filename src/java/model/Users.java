@@ -12,9 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -52,6 +54,19 @@ public class Users implements Serializable {
     @Basic(optional = false)
     @Column(name = "password")
     private String password;
+    @JoinColumn(name = "state", referencedColumnName = "id")
+    private States state;
+    
+    @Transient
+    private String fullname;
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
 
     public Users() {
     }
@@ -101,7 +116,7 @@ public class Users implements Serializable {
     }
 
     public String getPassword() {
-        return password;
+        return "null";
     }
 
     public void setPassword(String password) {
@@ -131,6 +146,20 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "model.Users[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the state
+     */
+    public States getState() {
+        return state;
+    }
+
+    /**
+     * @param state the state to set
+     */
+    public void setState(States state) {
+        this.state = state;
     }
     
 }

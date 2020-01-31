@@ -10,6 +10,7 @@ import controller.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import model.States;
 import model.Users;
 
 /**
@@ -19,10 +20,13 @@ import model.Users;
 public class MyClass {
     public void add(){
         Users user = new Users();
-        user.setFname("Abhinav");
-        user.setLname("Gupta");
-        user.setUsername("abhinav123");
+        user.setFullname("abc xyz");
+        String nameparts[] = user.getFullname().split("\\s+");
+        user.setFname(nameparts[0]);
+        user.setLname(nameparts[1]);
+        user.setUsername("xyz");
         user.setPassword("root");
+        user.setState(new States(1));
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA_demo1PU");
         UsersJpaController controller = new UsersJpaController(emf);
         controller.create(user);
@@ -30,7 +34,8 @@ public class MyClass {
     
     public static void main(String[] args) {
         //new MyClass().add();
-        new MyClass().login();
+        //new MyClass().add();
+        new MyClass().findusersbyfname();
     }
     
     public void delete() throws NonexistentEntityException{
@@ -51,10 +56,29 @@ public class MyClass {
         public void login(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA_demo1PU");
         UsersJpaController controller = new UsersJpaController(emf);
-        Users user = controller.login("abhinav123", "root");
+        Users user = controller.login2("abhinav123", "root");
         System.out.println(user.getFname()+" "+user.getLname());
+        System.out.println(user.getState().getName());
     }
 
-    
+        public void findusersbystate(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA_demo1PU");
+        UsersJpaController controller = new UsersJpaController(emf);
+        List<Users> users = controller.findUsersByState(1);
+        for(Users u : users){
+            System.out.println(u.getFname()+" "+u.getState().getName());
+        }
+        
+    }
+        
+        public void findusersbyfname(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA_demo1PU");
+        UsersJpaController controller = new UsersJpaController(emf);
+        List<Users> users = controller.findUsersByFname("Abhi%");
+        for(Users u : users){
+            System.out.println(u.getFname()+" "+u.getLname());
+        }
+        
+    }
     
 }
