@@ -35,7 +35,8 @@ public class MyClass {
     public static void main(String[] args) {
         //new MyClass().add();
         //new MyClass().add();
-        new MyClass().findusersbyfname();
+        //new MyClass().findusersbyfname();
+        new MyClass().findAll();
     }
     
     public void delete() throws NonexistentEntityException{
