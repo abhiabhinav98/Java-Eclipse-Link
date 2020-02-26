@@ -11,8 +11,7 @@
             <file>file:/C:/Users/HP/Documents/NetBeansProjects/JPA_demo1/web/index.html</file>
         </group>
         <group name="sih">
-            <file>file:/C:/Users/HP/Documents/NetBeansProjects/JPA_demo1/src/java/controller/UsersJpaController.java</file>
-            <file>file:/C:/Users/HP/Documents/NetBeansProjects/JPA_demo1/src/java/view/MyClass.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/JPA_demo1/src/java/service/UsersResource.java</file>
         </group>
     </open-files>
 </project-private>
